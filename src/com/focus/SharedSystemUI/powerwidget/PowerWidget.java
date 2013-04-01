@@ -121,9 +121,9 @@ public class PowerWidget extends FrameLayout {
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mShortPressVibePattern = getLongIntArray(mContext.getResources(),
-				com.android.internal.R.array.config_virtualKeyVibePattern);
+				R.array.config_virtualKeyVibePattern);
         mLongPressVibePattern = getLongIntArray(mContext.getResources(),
-                com.android.internal.R.array.config_longPressVibePattern);
+                R.array.config_longPressVibePattern);
 
         // get an initial width
         updateButtonLayoutWidth();
