@@ -24,7 +24,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.net.Uri;
-import android.net.wimax.WimaxHelper;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -37,6 +36,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.app.StatusBarManager;
 
 import com.focus.SharedSystemUI.R;
 
@@ -116,17 +116,22 @@ public class PowerWidget extends FrameLayout {
     public PowerWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+		Log.i(TAG, "PowerWidget Constructor");
         mContext = context;
         mHandler = new Handler();
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+		Log.i(TAG, "PowerWidget get viberpattern");
         mShortPressVibePattern = getLongIntArray(mContext.getResources(),
-				com.android.internal.R.array.config_virtualKeyVibePattern);
+				R.array.config_virtualKeyVibePattern);
         mLongPressVibePattern = getLongIntArray(mContext.getResources(),
-                com.android.internal.R.array.config_longPressVibePattern);
+                R.array.config_longPressVibePattern);
 
+		Log.i(TAG, "PowerWidget updateButtonLayoutWidth");
         // get an initial width
         updateButtonLayoutWidth();
+
+		Log.i(TAG, "PowerWidget setupWidget");
         setupWidget();
     }
 
@@ -191,10 +196,6 @@ public class PowerWidget extends FrameLayout {
         if (buttons == null) {
             Log.i(TAG, "Default buttons being loaded");
             buttons = BUTTONS_DEFAULT;
-            // Add the WiMAX button if it's supported
-            if (WimaxHelper.isWimaxSupported(mContext)) {
-                buttons += BUTTON_DELIMITER + PowerButton.BUTTON_WIMAX;
-            }
         }
         Log.i(TAG, "Button list: " + buttons);
 
@@ -220,6 +221,30 @@ public class PowerWidget extends FrameLayout {
         // register our observer
         mObserver = new WidgetSettingsObserver(mHandler);
         mObserver.observe();
+
+		setGlobalButtonOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if(Settings.System.getInt(mContext.getContentResolver(),
+                                Settings.System.EXPANDED_HIDE_ONCHANGE, 0) == 1) {
+                            // collapse status bar
+							Log.e(TAG, "collapse statusbar");
+							StatusBarManager statusBarManager = (StatusBarManager) getContext().getSystemService(
+									Context.STATUS_BAR_SERVICE);
+							statusBarManager.collapse();
+                        }
+                    }
+        });
+
+		setGlobalButtonOnLongClickListener(new View.OnLongClickListener() {
+		        public boolean onLongClick(View v) {
+                	// collapse status bar
+					Log.e(TAG, "collapse statusbar");
+					StatusBarManager statusBarManager = (StatusBarManager) getContext().getSystemService(
+						Context.STATUS_BAR_SERVICE);
+					statusBarManager.collapse();
+                	return true;
+            }
+        });
     }
 
     private boolean loadButton(String key) {

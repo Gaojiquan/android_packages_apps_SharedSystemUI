@@ -15,6 +15,8 @@ import android.os.Vibrator;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.app.StatusBarManager;
+import android.util.Log;
 
 import com.focus.SharedSystemUI.R;
 
