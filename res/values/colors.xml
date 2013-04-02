@@ -19,9 +19,8 @@
 -->
 <resources>
 
+    <drawable name="notification_item_background_color_pressed">#ff257390</drawable>
     <color name="darker_gray">#aaa</color>
-
- 
     <!-- A dark Holo shade of blue -->
     <color name="holo_blue_dark">#ff0099cc</color>
     <!-- A dark Holo shade of red -->
