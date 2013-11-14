@@ -49,7 +49,7 @@ public class AirplaneButton extends PowerButton {
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
-        return false;
+        return true;
     }
 
     @Override
