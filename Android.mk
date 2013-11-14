@@ -9,7 +9,7 @@ LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
 LOCAL_JAVA_LIBRARIES := services
 
-LOCAL_PACKAGE_NAME := SharedSystemUI
+LOCAL_PACKAGE_NAME := PowerSystemUI
 LOCAL_CERTIFICATE := platform
 
 include $(BUILD_PACKAGE)
